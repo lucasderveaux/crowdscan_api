@@ -16,3 +16,6 @@ app.use(function (req, res) {
 });
 
 console.log('crowdscan linked data stream RESTful API server started on: ' + port);
+
+var loop = require('./api/models/eventStream');
+loop();
