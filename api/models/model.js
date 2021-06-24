@@ -19,8 +19,6 @@ async function zetOm(req) {
     }
   }
 
-
-
   let inhoud = val["body"];
 
   let header = inhoud["header"];
@@ -127,19 +125,22 @@ function addObservations(writer, payload, time, timedelta, environment) {
         namedNode('http://www.w3.org/ns/sosa/hosts'),
         namedNode(environment + i)
       );
-
+      }
+      for (let i = 1; i < payload.length; i++) {
       writer.addQuad(
         namedNode(environment + i),//hier ga ik gewoon een cijfer achter zetten
         namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         namedNode('http://www.w3.org/ns/sosa/sensor')
       );
-
+      }
+      for (let i = 1; i < payload.length; i++) {
       writer.addQuad(
         namedNode(environment + i),
         namedNode('http://www.w3.org/ns/sosa/isHostedBy'),
         namedNode(environment)
       );
-
+      }
+      for (let i = 1; i < payload.length; i++) {
       makeSingleObservation(writer, payload[i], i, time, timedelta, environment);
     }
   }
