@@ -2,7 +2,7 @@ const unirest = require('unirest');
 const N3 = require('n3');
 const { namedNode, literal } = N3.DataFactory;
 
-async function do_the_thing(req) {
+async function zetOm(req) {
 
   let baseurl = 'https://production.crowdscan.be/dataapi/gent/';
   let test = req.url.split('/');
@@ -198,5 +198,5 @@ function makeSingleObservation(writer, headCount, suffix, time, timedelta, envir
 }
 
 module.exports = {
-  do_the_thing
-}
+  zetOm
+};
