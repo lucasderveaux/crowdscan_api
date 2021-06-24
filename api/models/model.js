@@ -9,7 +9,7 @@ async function do_the_thing(req) {
 
   let val;
 
-  if (test.length == 1) {
+  if (test.length <= 2) {
     val = await unirest.get(baseurl+'gent_langemunt/data/5');
   }else{
     if(test.length == 2){
@@ -125,17 +125,17 @@ function addObservations(writer, payload, time, timedelta, environment) {
       writer.addQuad(
         namedNode(environment),
         namedNode('http://www.w3.org/ns/sosa/hosts'),
-        namedNode(environment + 'i')
+        namedNode(environment + i)
       );
 
       writer.addQuad(
-        namedNode(environment + 'i'),//hier ga ik gewoon een cijfer achter zetten
+        namedNode(environment + i),//hier ga ik gewoon een cijfer achter zetten
         namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         namedNode('http://www.w3.org/ns/sosa/sensor')
       );
 
       writer.addQuad(
-        namedNode(environment + 'i'),
+        namedNode(environment + i),
         namedNode('http://www.w3.org/ns/sosa/isHostedBy'),
         namedNode(environment)
       );
