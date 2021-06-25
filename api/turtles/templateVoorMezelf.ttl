@@ -3,10 +3,9 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <https://www.w3.org/2001/XMLSchema#> .
 @prefix time: <http://www.w3.org/2006/time#> .
-@prefix ssn:  <http://www.w3.org/ns/ssn/> .
 
 <langemunt> rdf:type sosa:FeatureOfInterest ;
-  rdfs:label "de langemunt in Gent";
+  rdfs:label "de langemunt in gent";
   sosa:hasSample <groentemarkt>, <gent_langemunt1>, <gent_langemunt2>.
 
 <groentemarkt> a sosa:Sample;
@@ -37,12 +36,12 @@
   rdfs:comment "De sensor in het gebied Langemunt deel 2" ;
   sosa:isHostedBy <langemunt_platform> .
 
-<drukte_lange_munt> a sosa:ObservableProperty ;
-  rdfs:label "Amount of people within a certain timeframe" .
+<hoeveelheid_mensen_langemunt> a sosa:ObservableProperty ;
+  rdfs:label "De heoveelheid mensen in de langemunt in Gent" .
 
 <observation1> a sosa:Observation ;
   sosa:hasFeatureOfInterest <groentemarkt> ;
-  ssn:isProxyFor <drukte_lange_munt> ;
+  sosa:observedProperty <hoeveelheid_mensen_langemunt> ;
 	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTime ;
 	sosa:hasSimpleResult "33.585004325759584"^^xsd:double ;
   sosa:phenomenonTime [
@@ -51,14 +50,14 @@
       rdf:type time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:34:36.495285"^^xsd:dateTimeStamp ] ;
     time:hasEnd [
-      rdf:type time:Instant;
+      rfd:type time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ] ;
   ] ;
 	sosa:madeBySensor <groentemarkt_sensor> .
 
 <observation2> a sosa:Observation ;
   sosa:hasFeatureOfInterest <gent_langemunt1> ;
-  ssn:isProxyFor <drukte_lange_munt> ;
+  sosa:observerdProperty <hoeveelheid_mensen_langemunt> ;
 	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTime ;
 	sosa:hasSimpleResult "38.875591201835434"^^xsd:double ;
   sosa:phenomenonTime [
@@ -67,14 +66,14 @@
       rdf:type time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:34:36.495285"^^xsd:dateTimeStamp ] ;
     time:hasEnd [
-      rdf:type time:Instant;
+      rfd:type time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ] ;
   ] ;
 	sosa:madeBySensor <gent_langemunt1_sensor> .
 
 <observation3> a sosa:Observation ;
   sosa:hasFeatureOfInterest <gent_langemunt2> ;
-  ssn:isProxyFor <drukte_lange_munt> ;
+  sosa:observerdProperty <hoeveelheid_mensen_langemunt> ;
 	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTime ;
 	sosa:hasSimpleResult "1.1199560146372134"^^xsd:double ;
   sosa:phenomenonTime [
@@ -83,7 +82,7 @@
       rdf:type time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:34:36.495285"^^xsd:dateTimeStamp ] ;
     time:hasEnd [
-      rdf:type time:Instant;
+      rfd:type time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ] ;
   ] ;
 	sosa:madeBySensor <gent_langemunt2_sensor> .
