@@ -7,15 +7,22 @@ async function zetOm(req) {
   let baseurl = 'https://production.crowdscan.be/dataapi/gent/';
   let test = req.url.split('/');
 
+  console.log(req.url);
+
   let val;
 
-  if (test.length <= 2) {
-    val = await unirest.get(baseurl+'gent_langemunt/data/5');
-  }else{
-    if(test.length == 2){
-      val = await unirest.get(baseurl+test[1]+'/data/5');
-    }else{
-      val = await unirest.get(baseurl+test[1]+'/data/'+test[2]);
+  if (test.length < 2) {
+    val = await unirest.get(baseurl + 'gent_langemunt/data/5');
+  } else {
+    if (test.length == 2) {
+      if (test[1].length == 0) {
+        val = await unirest.get(baseurl + 'gent_langemunt/data/5');
+      } else {
+        val = await unirest.get(baseurl + test[1] + '/data/5');
+      }
+    } else {
+      let cijfer = (test[2].length == 0 ? 5 : test[2]);
+      val = await unirest.get(baseurl + test[1] + '/data/' + cijfer);
     }
   }
 
@@ -89,7 +96,7 @@ async function zetOm(req) {
       //console.log(result);
     });
   } catch (e) {
-    console.log("de error is: "+e);
+    console.log("de error is: " + e);
   }
 
   return tekst;
@@ -125,22 +132,22 @@ function addObservations(writer, payload, time, timedelta, environment) {
         namedNode('http://www.w3.org/ns/sosa/hosts'),
         namedNode(environment + i)
       );
-      }
-      for (let i = 1; i < payload.length; i++) {
+    }
+    for (let i = 1; i < payload.length; i++) {
       writer.addQuad(
         namedNode(environment + i),//hier ga ik gewoon een cijfer achter zetten
         namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         namedNode('http://www.w3.org/ns/sosa/sensor')
       );
-      }
-      for (let i = 1; i < payload.length; i++) {
+    }
+    for (let i = 1; i < payload.length; i++) {
       writer.addQuad(
         namedNode(environment + i),
         namedNode('http://www.w3.org/ns/sosa/isHostedBy'),
         namedNode(environment)
       );
-      }
-      for (let i = 1; i < payload.length; i++) {
+    }
+    for (let i = 1; i < payload.length; i++) {
       makeSingleObservation(writer, payload[i], i, time, timedelta, environment);
     }
   }
