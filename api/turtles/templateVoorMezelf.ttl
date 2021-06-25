@@ -42,7 +42,7 @@
 <observation1> a sosa:Observation ;
   sosa:hasFeatureOfInterest <groentemarkt> ;
   sosa:observedProperty <hoeveelheid_mensen_langemunt> ;
-	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTime ;
+	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ;
 	sosa:hasSimpleResult "33.585004325759584"^^xsd:double ;
   sosa:phenomenonTime [
     rdf:type time:Interval ;
@@ -58,7 +58,7 @@
 <observation2> a sosa:Observation ;
   sosa:hasFeatureOfInterest <gent_langemunt1> ;
   sosa:observerdProperty <hoeveelheid_mensen_langemunt> ;
-	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTime ;
+	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ;
 	sosa:hasSimpleResult "38.875591201835434"^^xsd:double ;
   sosa:phenomenonTime [
     rdf:type time:Interval ;
@@ -74,7 +74,7 @@
 <observation3> a sosa:Observation ;
   sosa:hasFeatureOfInterest <gent_langemunt2> ;
   sosa:observerdProperty <hoeveelheid_mensen_langemunt> ;
-	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTime ;
+	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ;
 	sosa:hasSimpleResult "1.1199560146372134"^^xsd:double ;
   sosa:phenomenonTime [
     rdf:type time:Interval ;
