@@ -37,7 +37,7 @@
   sosa:isHostedBy <langemunt_platform> .
 
 <hoeveelheid_mensen_langemunt> a sosa:ObservableProperty ;
-  rdfs:label "De heoveelheid mensen in de langemunt in Gent" .
+  rdfs:label "De hoeveelheid mensen in de langemunt in Gent" .
 
 <observation1> a sosa:Observation ;
   sosa:hasFeatureOfInterest <groentemarkt> ;
