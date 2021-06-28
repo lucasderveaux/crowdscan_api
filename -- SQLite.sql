@@ -1,5 +1,5 @@
 -- SQLite
-CREATE TABLE Gent_langemunt(
+CREATE TABLE crowdscan_databank(
   naam varchar(255),
   resultTime DateTime,
   hasSimpleResult double,

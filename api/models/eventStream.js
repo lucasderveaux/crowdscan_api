@@ -1,11 +1,35 @@
 const sqlite3 = require('sqlite3').verbose();
 const { OPEN_CREATE, OPEN_READWRITE } = require('sqlite3');
+const unirest = require('unirest');
 
 let i = 0;
 let id;
 let db;
+let val;
 
-function VoerUit(req, res) {
+async function vraagDataOp() {
+  val = await unirest.get('https://production.crowdscan.be/dataapi/gent/gent_langemunt/data/1');
+
+
+  //timedelta kennen we en environment eigenlijk ook
+  let payload = val["body"]["payload"]["regions"];
+  let tijd = val["body"]["header"]["time"];
+  let timedelta = val["body"]["header"]["timedelta"];
+  let environment = val["body"]["header"]["environment"];
+
+  console.log(payload);
+
+  for (let i = 1; i < payload.length; i++) {
+    db.run(`INSERT INTO crowdscan_databank VALUES(?,?,?,?,?)`,
+      [environment, tijd, payload[i], timedelta, environment + i + "_sensor"], (err) => {
+        if (err) {
+          console.log(err.message);
+        }
+      });
+  }
+}
+
+function VoerUit() {
   if (i == 10) {
     db.close((err) => {
       if (err) {
@@ -16,13 +40,7 @@ function VoerUit(req, res) {
     });
     clearInterval(id);
   } else {
-    console.log("Dag Lucas");
-
-    db.run(`INSERT INTO Gent_langemunt VALUES (?,?,?,?,?)`,["test"+i,Date.now(),55.22,3,"sensor"+i],(err)=>{
-      if(err){
-        console.log(err);
-      }
-    });
+    vraagDataOp();
 
     i++;
   }
@@ -36,7 +54,7 @@ module.exports = function loop() {
       console.log("db is open");
     }
   });
-  id = setInterval(VoerUit, 6000);
+  id = setInterval(VoerUit, 60000);
 };
 
 
