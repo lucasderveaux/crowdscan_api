@@ -2,13 +2,13 @@ const sqlite3 = require('sqlite3').verbose();
 const { OPEN_CREATE, OPEN_READWRITE } = require('sqlite3');
 const unirest = require('unirest');
 
-let i = 0;
+let j = 0;
 let id;
 let db;
 let val;
 
 async function vraagDataOp() {
-  val = await unirest.get('https://production.crowdscan.be/dataapi/gent/gent_langemunt/data/1');
+  val = await unirest.get('https://production.crowdscan.be/dataapi/gent/veldstraat/data/1');
 
 
   //timedelta kennen we en environment eigenlijk ook
@@ -19,18 +19,30 @@ async function vraagDataOp() {
 
   console.log(payload);
 
-  for (let i = 1; i < payload.length; i++) {
-    db.run(`INSERT INTO crowdscan_databank VALUES(?,?,?,?,?)`,
-      [environment, tijd, payload[i], timedelta, environment + i + "_sensor"], (err) => {
-        if (err) {
-          console.log(err.message);
-        }
-      });
+  if (payload.length >= 2) {
+    for (let i = 1; i < payload.length; i++) {
+      db.run(`INSERT INTO crowdscan_databank VALUES(?,?,?,?,?)`,
+        [environment, tijd, payload[i], timedelta, environment + i + "_sensor"], (err) => {
+          if (err) {
+            console.log(err.message);
+          }
+        });
+    }
+  } else {
+    if (payload.length == 1) {
+      db.run(`INSERT INTO crowdscan_databank VALUES(?,?,?,?,?)`,
+        [environment, tijd, payload[0], timedelta, environment+ "_sensor"], (err) => {
+          if (err) {
+            console.log(err.message);
+          }
+        });
+    }
   }
+
 }
 
 function VoerUit() {
-  if (i == 10) {
+  if (j == 10) {
     db.close((err) => {
       if (err) {
         console.log(err.message);
@@ -42,7 +54,7 @@ function VoerUit() {
   } else {
     vraagDataOp();
 
-    i++;
+    j++;
   }
 }
 
