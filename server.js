@@ -1,12 +1,17 @@
-var express = require('express'),
+let cors = require('cors');
+let express = require('express'),
   app = express(),
   port = process.env.PORT || 3000,
   bodyParser = require('body-parser');
 
+app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var routes = require('./api/routes/routes');
+
+
+let routes = require('./api/routes/routes');
 routes(app);
 
 app.listen(port);
@@ -16,6 +21,6 @@ app.use(function (req, res) {
 });
 
 console.log('crowdscan linked data stream RESTful API server started on: ' + port);
-
-var loop = require('./api/models/eventStream');
-loop();
+/*
+let loop = require('./api/models/eventStream');
+loop();*/

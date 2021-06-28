@@ -47,9 +47,10 @@ async function zetOm(req) {
         {
           rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
           sosa: 'http://www.w3.org/ns/sosa/',
-          rdf: 'http://wwww.w3.org/1999/02/22-rdf-syntax-ns#',
+          rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
           xsd: 'http://www.w3.org/2001/XMLSchema#',
           time: 'http://www.w3.org/2006/time#',
+          crowdscan: 'https://production.crowdscan.be/dataapi/gent/environments/'
         }
       }); //de default is turtle
 
@@ -58,8 +59,8 @@ async function zetOm(req) {
 
     //Feature of interest aanmaken
     writer.addQuad(
-      namedNode(environment),
-      namedNode('http://wwww.w3.org/1999/02/22-rdf-syntax-ns#type'),
+      namedNode('https://production.crowdscan.be/dataapi/gent/environments/'+environment),
+      namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
       namedNode('sosa:FeatureOfInterest')
     );
 
@@ -140,21 +141,17 @@ function addObservations(writer, payload, time, timedelta, environment) {
           namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
           namedNode('http://www.w3.org/ns/sosa/Sample')
         );
-      }
-
-      for (let i = 1; i < payload.length; i++) {
+     
         writer.addQuad(
           namedNode(environment + i + '_sample'),
           namedNode('http://www.w3.org/ns/sosa/isSampleOf'),
           namedNode(environment)
         );
-      }
-
-      for (let i = 1; i < payload.length; i++) {
+      
         writer.addQuad(
           namedNode(environment + i + '_sample'),
           namedNode('http://www.w3.org/2000/01/rdf-schema#comment'),
-          literal(environment + ' is opgedeeld in ' + payload.length + ' delen en dit is de sample van deel ' + i)
+          literal(environment + ' is opgedeeld in ' + payload.length + ' delen en dit is het sample van deel ' + i)
         );
       }
       for (let i = 1; i < payload.length; i++) {
@@ -172,8 +169,7 @@ function addObservations(writer, payload, time, timedelta, environment) {
           namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
           namedNode('http://www.w3.org/ns/sosa/sensor')
         );
-      }
-      for (let i = 1; i < payload.length; i++) {
+      
         writer.addQuad(
           namedNode(environment + i + '_sensor'),
           namedNode('http://www.w3.org/ns/sosa/isHostedBy'),
@@ -223,12 +219,12 @@ function makeSingleObservation(writer, headCount, suffix, time, timedelta, envir
     namedNode('http://www.w3.org/ns/sosa/phenomenonTime'),
     writer.blank([
       {
-        predicate: namedNode('http://wwww.w3.org/1999/02/22-rdf-syntax-ns#type'),
+        predicate: namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
         object: namedNode('http://www.w3.org/2006/time#Interval')
       }, {
         predicate: namedNode('http://www.w3.org/2006/time#hasBeginning'),
         object: writer.blank([{
-          predicate: namedNode('http://wwww.w3.org/1999/02/22-rdf-syntax-ns#type'),
+          predicate: namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
           object: namedNode('http://www.w3.org/2006/time#Instant')
         }, {
           predicate: namedNode('http://www.w3.org/2006/time#inXSDDateTimeStamp'),
@@ -238,7 +234,7 @@ function makeSingleObservation(writer, headCount, suffix, time, timedelta, envir
       {
         predicate: namedNode('http://www.w3.org/2006/time#hasEnd'),
         object: writer.blank([{
-          predicate: namedNode('http://wwww.w3.org/1999/02/22-rdf-syntax-ns#type'),
+          predicate: namedNode('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
           object: namedNode('http://www.w3.org/2006/time#Instant')
         }, {
           predicate: namedNode('http://www.w3.org/2006/time#inXSDDateTimeStamp'),

@@ -1,24 +1,42 @@
 const sqlite3 = require('sqlite3').verbose();
-const { OPEN_CREATE,OPEN_READWRITE } = require('sqlite3');
+const { OPEN_CREATE, OPEN_READWRITE } = require('sqlite3');
 
-module.exports = function loop(){
-  let db = new sqlite3.Database('./api/databank/observations.db',sqlite3.OPEN_READWRITE|sqlite3.OPEN_CREATE,(err)=>{
-    if(err){
+let i = 0;
+let id;
+let db;
+
+function VoerUit(req, res) {
+  if (i == 10) {
+    db.close((err) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        console.log("db is gesloten");
+      }
+    });
+    clearInterval(id);
+  } else {
+    console.log("Dag Lucas");
+
+    db.run(`INSERT INTO Gent_langemunt VALUES (?,?,?,?,?)`,["test"+i,Date.now(),55.22,3,"sensor"+i],(err)=>{
+      if(err){
+        console.log(err);
+      }
+    });
+
+    i++;
+  }
+}
+
+module.exports = function loop() {
+  db = new sqlite3.Database('./api/databank/observations.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+    if (err) {
       console.log(err.message);
-    }else{
+    } else {
       console.log("db is open");
     }
   });
-
-  db.close((err)=>{
-    if(err){
-      console.log(err.message);
-    }
-  });
-
-  setInterval((req,res)=>{
-    console.log("dag lucas");
-  },60000);
+  id = setInterval(VoerUit, 6000);
 };
 
 
