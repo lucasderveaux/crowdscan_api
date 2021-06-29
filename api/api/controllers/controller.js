@@ -18,8 +18,8 @@ exports.zetOm = async function (req, res) {
 };
 
 exports.zetNaarLDES = async function (req, res) {
+  
   let model = require('../models/modelAllObservations');
-
   try {
     let data = await model.zetNaarLDES(req);
 
