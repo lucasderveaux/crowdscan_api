@@ -1,5 +1,5 @@
 exports.zetOm = async function (req, res) {
-  var model = require('../models/model');
+  var model = require('../models/modelSingleObservation');
   try {
 
     let data = await model.zetOm(req);

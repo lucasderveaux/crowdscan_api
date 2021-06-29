@@ -1,3 +1,7 @@
 node_modules/
 package-lock.json
 /databank/
+*.db
+api/databank/observations.db
+-- SQLite.sql
+*.sql
