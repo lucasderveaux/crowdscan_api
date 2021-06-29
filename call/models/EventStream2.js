@@ -8,7 +8,7 @@ let straten = ["gent_langemunt", "veldstraat"];
 async function getConnectie() {
   let sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './api/databank/observations.db'
+    storage: '../databank/observations.db'
   });
 
   try {
