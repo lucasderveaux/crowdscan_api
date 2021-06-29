@@ -5,7 +5,26 @@ exports.zetOm = async function (req, res) {
     let data = await model.zetOm(req);
 
     if (data) {
-      res.writeHeader(200, {"Content-Type":"text/turtle"});
+      res.writeHeader(200, { "Content-Type": "text/turtle" });
+      res.write(data);
+      res.end();
+    }
+    else {
+      res.status(400).json({ error: "not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "error in the data" });
+  }
+};
+
+exports.zetNaarLDES = async function (req, res) {
+  let model = require('../models/modelAllObservations');
+
+  try {
+    let data = await model.zetNaarLDES(req);
+
+    if (data) {
+      res.writeHeader(200, { "Content-Type": "text/turtle" });
       res.write(data);
       res.end();
     }

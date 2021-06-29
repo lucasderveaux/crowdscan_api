@@ -7,4 +7,6 @@ module.exports = function (app) {
     .get(controller.zetOm);
   app.route('/:aanvraag/:id')
     .get(controller.zetOm);
+  app.rout('/LDES/:aanvraag/:id')
+    .get(controller.zetNaarLDES);
 };

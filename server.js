@@ -22,6 +22,7 @@ app.use(function (req, res) {
 
 console.log('crowdscan linked data stream RESTful API server started on: ' + port);
 
-
-// let loop = require('./api/models/eventStream');
-// loop();
+/*
+ let loop = require('./api/models/eventStream2');
+ loop();
+ */
