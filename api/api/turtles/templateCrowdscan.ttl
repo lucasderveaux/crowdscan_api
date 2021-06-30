@@ -10,15 +10,15 @@ crowdscan:gent_langemunt a sosa:FeatureOfInterest ;
   rdfs:label "de langemunt in gent";
   sosa:hasSample <groentemarkt>, <gent_langemunt1>, <gent_langemunt2>.
 
-<groentemarkt> a sosa:Sample;
+<gent_langemunt1> a sosa:Sample;
   rdfs:comment "de groentemarkt is een sample van de langemunt";
   sosa:isSampleOf <langemunt> .
 
-<gent_langemunt1> a sosa:Sample;
+<gent_langemunt2> a sosa:Sample;
   rdfs:comment "de langemunt is opgedeeld in twee delen, dit is sample deel 1";
   sosa:isSampleOf <langemunt>.
 
-<gent_langemunt2> a sosa:Sample;
+<gent_langemunt3> a sosa:Sample;
   rdfs:comment "de langemunt is opgedeeld in twee delen, dit is sample deel 2";
   sosa:isSampleOf <langemunt> .
 
@@ -26,15 +26,15 @@ crowdscan:gent_langemunt a sosa:FeatureOfInterest ;
   rdfs:comment "de lange munt heeft 3 delen waar sensoren geplaatst zijn" ;
   sosa:hosts <groentemarkt_sensor>, <gent_langemunt1_sensor>, <gent_langemunt2_sensor> .
 
-<groentemarkt_sensor> a sosa:sensor ;
+<gent_langemunt1_sensor> a sosa:sensor ;
   rdfs:comment "De sensor in het gebied van de Groentemarkt";
   sosa:isHostedBy <langemunt_platform> .
 
-<gent_langemunt1_sensor> a sosa:sensor ;
+<gent_langemunt2_sensor> a sosa:sensor ;
   rdfs:comment "De sensor in het gebied Langemunt deel 1" ;
   sosa:isHostedBy <langemunt_platform> .
 
-<gent_langemunt2_sensor> a sosa:sensor ;
+<gent_langemunt3_sensor> a sosa:sensor ;
   rdfs:comment "De sensor in het gebied Langemunt deel 2" ;
   sosa:isHostedBy <langemunt_platform> .
 
@@ -42,7 +42,7 @@ crowdscan:gent_langemunt a sosa:FeatureOfInterest ;
   rdfs:label "De hoeveelheid mensen".
 
 <observation1> a sosa:Observation ;
-  sosa:hasFeatureOfInterest <groentemarkt> ;
+  sosa:hasFeatureOfInterest <gent_langemunt1> ;
   sosa:observedProperty <hoeveelheid_mensen> ;
 	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ;
 	sosa:hasSimpleResult "33.585004325759584"^^xsd:double ;
@@ -55,10 +55,10 @@ crowdscan:gent_langemunt a sosa:FeatureOfInterest ;
       a time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ] ;
   ] ;
-	sosa:madeBySensor <groentemarkt_sensor> .
+	sosa:madeBySensor <gent_langemunt1_sensor> .
 
 <observation2> a sosa:Observation ;
-  sosa:hasFeatureOfInterest <gent_langemunt1> ;
+  sosa:hasFeatureOfInterest <gent_langemunt2> ;
   sosa:observerdProperty <hoeveelheid_mensen> ;
 	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ;
 	sosa:hasSimpleResult "38.875591201835434"^^xsd:double ;
@@ -71,10 +71,10 @@ crowdscan:gent_langemunt a sosa:FeatureOfInterest ;
       a time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ] ;
   ] ;
-	sosa:madeBySensor <gent_langemunt1_sensor> .
+	sosa:madeBySensor <gent_langemunt2_sensor> .
 
 <observation3> a sosa:Observation ;
-  sosa:hasFeatureOfInterest <gent_langemunt2> ;
+  sosa:hasFeatureOfInterest <gent_langemunt3> ;
   sosa:observerdProperty <hoeveelheid_mensen> ;
 	sosa:resultTime "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ;
 	sosa:hasSimpleResult "1.1199560146372134"^^xsd:double ;
@@ -87,4 +87,4 @@ crowdscan:gent_langemunt a sosa:FeatureOfInterest ;
       a time:Instant;
       time:inXSDDateTimeStamp "2021-06-22T12:37:36.495285"^^xsd:dateTimeStamp ] ;
   ] ;
-	sosa:madeBySensor <gent_langemunt2_sensor> .
+	sosa:madeBySensor <gent_langemunt3_sensor> .
