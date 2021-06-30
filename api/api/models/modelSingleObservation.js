@@ -5,24 +5,22 @@ const { namedNode, literal } = N3.DataFactory;
 async function zetOm(req) {
 
   let baseurl = 'https://production.crowdscan.be/dataapi/gent/';
-  let test = req.url.split('/');
-
-  console.log(req.url);
+  let url = req.url.split('/');
 
   let val;
 
-  if (test.length < 2) {
+  if (url.length < 2) {
     val = await unirest.get(baseurl + 'gent_langemunt/data/5');
   } else {
-    if (test.length == 2) {
-      if (test[1].length == 0) {
+    if (url.length == 2) {
+      if (url[1].length == 0) {
         val = await unirest.get(baseurl + 'gent_langemunt/data/5');
       } else {
-        val = await unirest.get(baseurl + test[1] + '/data/5');
+        val = await unirest.get(baseurl + url[1] + '/data/5');
       }
     } else {
-      let cijfer = (test[2].length == 0 ? 5 : test[2]);
-      val = await unirest.get(baseurl + test[1] + '/data/' + cijfer);
+      let cijfer = (url[2].length == 0 ? 5 : url[2]);
+      val = await unirest.get(baseurl + url[1] + '/data/' + cijfer);
     }
   }
 
@@ -128,7 +126,7 @@ function addObservations(writer, payload, time, timedelta, environment) {
       //environment zijn samples geven
       for (let i = 1; i < payload.length; i++) {
         writer.addQuad(
-          namedNode(environment),
+          namedNode('https://production.crowdscan.be/dataapi/gent/environments/'+environment),
           namedNode('http://www.w3.org/ns/sosa/hasSample'),
           namedNode(environment + i + '_sample')
         );
@@ -145,7 +143,7 @@ function addObservations(writer, payload, time, timedelta, environment) {
         writer.addQuad(
           namedNode(environment + i + '_sample'),
           namedNode('http://www.w3.org/ns/sosa/isSampleOf'),
-          namedNode(environment)
+          namedNode('https://production.crowdscan.be/dataapi/gent/environments/'+environment)
         );
       
         writer.addQuad(
@@ -193,7 +191,7 @@ function makeSingleObservation(writer, headCount, suffix, time, timedelta, envir
   writer.addQuad(
     namedNode('observation' + suffix),
     namedNode('http://www.w3.org/ns/sosa/hasFeatureOfInterest'),
-    namedNode(environment)
+    namedNode('https://production.crowdscan.be/dataapi/gent/environments/'+environment)
   );
 
   writer.addQuad(

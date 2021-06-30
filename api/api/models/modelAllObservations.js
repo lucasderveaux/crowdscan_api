@@ -2,15 +2,20 @@ const N3 = require('n3');
 const { namedNode, literal } = N3.DataFactory;
 const { Sequelize, DataTypes } = require('sequelize');
 
+let writer;
+
 async function zetNaarLDES(req) {
   let tekst;
+
+  let url = req.url.split('/');
+  let environment = url[2];
 
   // Om te starten ga ik er van uit gaan dat ik al weet Welke 
   // observaties, platformen en dergelijke er al zijn en dan ga 
   // ik de observations uit de databank hiervoor toevoegen
 
   try {
-    let writer = new N3.Writer(
+    writer = new N3.Writer(
       {
         prefixes:
         {
@@ -26,7 +31,6 @@ async function zetNaarLDES(req) {
     //er is één featureOfInterest
     //ik denk dat ik misschien toch het even voor de langemunt ga bekijken
 
-    let environment = "gent_langemunt";
     //Feature of interest aanmaken
     writer.addQuad(
       namedNode('https://production.crowdscan.be/dataapi/gent/environments/' + environment),
@@ -51,8 +55,8 @@ async function zetNaarLDES(req) {
       namedNode('http://www.w3.org/ns/sosa/Platform')
     );
 
-    getConnectie(writer);
-
+    let test = await getConnectie(environment);
+    console.log(test);
     writer.end((error, result) => {
       tekst += result;
       //console.log(result);
@@ -63,8 +67,10 @@ async function zetNaarLDES(req) {
   return tekst;
 }
 
-async function getConnectie(writer) {
-  console.log("getConnectie wordt opgeroepen");
+async function getConnectie( environment) {
+  
+
+  //console.log("getConnectie wordt opgeroepen");
   let sequelize = new Sequelize({
     dialect: 'sqlite',
     storage: '../databank/observations.db'
@@ -76,40 +82,87 @@ async function getConnectie(writer) {
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
-
-
-  Observation = sequelize.define('observation', {
-    naam: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    resultTime: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    hasSimpleResult: {
-      type: DataTypes.DOUBLE,
-      allowNull: false
-    },
-    timeDelta: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    madeBySensor: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  }, {
-    timestamps: false
-  });
-
-
-  await Observation.sync();
-  console.log("synced");
   
-  let observations = await Observation.findAll();
-  console.log(observations.every(observation => observation instanceof Observation));
-  console.log("de observations are", JSON.stringify(observations,null,2));
+
+  async function getSensors(omgeving) {
+    
+    Sensor = sequelize.define('sensor', {
+      environment: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      sensors: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      }
+    }, {
+      timestamps: false
+    });
+    
+    let sensors = Sensor.findOne({
+      where: {
+        environment: omgeving
+      },raw:true,
+      nest: true
+    });
+    
+    console.log(sensors.sensors);
+    makeSensors(6, omgeving);
+  }
+
+  async function getObservations() {
+    Observation = sequelize.define('observation', {
+      naam: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      resultTime: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      hasSimpleResult: {
+        type: DataTypes.DOUBLE,
+        allowNull: false
+      },
+      timeDelta: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      madeBySensor: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    }, {
+      timestamps: false
+    });
+
+
+    await Observation.sync();
+    console.log("synced");
+
+    let observations = await Observation.findAll();
+    console.log(observations);
+  }
+
+  getSensors(environment);
+  console.log("het aantal sensors zijn");
+  //getObservations();
+}
+
+function makeSensors(aantal, environment) {
+  console.log("dit wordt opgeroepen"+aantal);
+  if (aantal == 1) {
+    console.log('dit kan niet');
+  } else {
+    console.log('dit wel');
+    writer.addQuad(
+      namedNode(environment+'_platform'),
+      namedNode('http://www.w3.org/ns/sosa/hosts'),
+      namedNode('litterally whatever')
+    );
+  }
+  console.log("it's over");
+  return 'oké';
 }
 
 module.exports = {

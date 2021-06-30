@@ -13,7 +13,7 @@ exports.zetOm = async function (req, res) {
       res.status(400).json({ error: "not found" });
     }
   } catch (err) {
-    res.status(500).json({ error: "error in the data" });
+    res.status(500).json({ error: "error in the data bij zetom" });
   }
 };
 
@@ -32,6 +32,11 @@ exports.zetNaarLDES = async function (req, res) {
       res.status(400).json({ error: "not found" });
     }
   } catch (err) {
-    res.status(500).json({ error: "error in the data" });
+    res.status(500).json({ error: "error in the data bij ldes" });
   }
 };
+
+exports.scriptje = async function (req,res) {
+  let model = require('../models/scriptje');
+  model.scriptje(req);
+}
